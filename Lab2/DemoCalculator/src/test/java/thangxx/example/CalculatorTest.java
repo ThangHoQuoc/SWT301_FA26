@@ -2,6 +2,8 @@ package thangxx.example;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -51,18 +53,17 @@ class CalculatorTest {
         assertEquals("Cannot divide by zero", ex.getMessage());
     }
 
-    @Test
-    @DisplayName("multiply(4,5) trả về 20")
-    void multiply_TwoPositiveNumbers_ReturnsProduct() {
-        // Arrange
-        int a = 4;
-        int b = 5;
-        int expected = 20;
+    @ParameterizedTest(name = "Test {index} => {0} * {1} = {2}")
+    @CsvFileSource(resources = "/data.csv", numLinesToSkip = 1)
+    @DisplayName("multiply: kiểm thử với nhiều bộ dữ liệu từ CSV")
+    void multiply_VariousInputs_ReturnsProduct(int a, int b, int expected) {     // Arrange: a, b, expected do JUnit inject từ CSV
 
         // Act
         int actual = calculator.multiply(a, b);
 
         // Assert
-        assertEquals(expected, actual, "4 * 5 phải bằng 20");
+        assertEquals(expected, actual, () -> a + " * " + b + " phải bằng " + expected);
+
     }
+
 }
