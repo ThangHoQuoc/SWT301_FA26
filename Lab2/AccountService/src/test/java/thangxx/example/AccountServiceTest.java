@@ -28,7 +28,8 @@ class AccountServiceTest {
         // Act
         boolean result = service.isValidEmail(email);
 
-        // Assert         assertTrue(result);
+        // Assert
+        assertTrue(result);
     }
 
     @ParameterizedTest(name = "Email không hợp lệ: \"{0}\"")
