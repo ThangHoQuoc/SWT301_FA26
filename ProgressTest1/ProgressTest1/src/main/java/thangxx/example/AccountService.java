@@ -77,6 +77,13 @@ public class AccountService {
         return s.toLowerCase(Locale.ROOT);
     }
 
+    public Optional<Account> findByUsername(String username) {
+        if (isBlank(username)) {
+            return Optional.empty();
+        }
+        return Optional.ofNullable(accountsByUsername.get(key(username)));
+    }
+
     public ResultCode unlockAccount(String username) {
         throw new UnsupportedOperationException("TODO");
     }
